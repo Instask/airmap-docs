@@ -1,0 +1,157 @@
+swagger: '2.0'
+
+info:
+  title: Airmap API
+  description: Airmap
+  version: 1.0.0
+  
+host: airmap.instask.me
+schemes:
+- https
+
+basePath: "/api/v1"
+consumes:
+- application/json
+produces:
+- application/json
+
+paths:
+  "/loc":
+    get:
+      summary: Query airpods by latitude, longitude and distance
+      tags:
+      - Loc
+      parameters:
+        - name: lat
+          description: Loc latitude
+          required: true
+          in: query
+          type: number
+        - name: lng
+          description: Loc longitude
+          required: true
+          in: query
+          type: number
+        - name: dist
+          description: Distance, meters
+          required: true
+          in: query
+          type: integer
+      responses:
+        '200':
+          description: An array of Loc
+          schema:
+            type: array
+            items:
+              "$ref": "#/definitions/Loc"
+        default:
+          description: Unexpected error
+          schema:
+            "$ref": "#/definitions/Error"
+    "post":
+      summary: Create an Loc
+      tags:
+      - Loc
+      parameters:
+        - name: lat
+          description: Loc latitude
+          required: true
+          in: formData
+          type: number
+        - name: lng
+          description: Loc longitude
+          required: true
+          in: formData
+          type: number
+        - name: title
+          description: Loc title
+          required: true
+          in: formData
+          type: string
+        - name: desc
+          description: Loc desc
+          required: true
+          in: formData
+          type: string
+        - name: wechat
+          description: Loc wechat
+          required: false
+          in: formData
+          type: string
+        - name: gender
+          description: Reporter gender
+          required: false
+          in: formData
+          type: string
+        - name: which
+          description: Which airpod
+          required: true
+          in: formData
+          type: string
+      responses:
+        '201':
+          description: Loc object
+          schema:
+            "$ref": "#/definitions/Loc"
+        default:
+          description: Unexpected error
+          schema:
+            "$ref": "#/definitions/Error"
+  "/loc/{id}":
+    delete:
+      summary: Delete an Loc by id
+      tags:
+      - Loc
+      parameters:
+        - name: id
+          description: Loc ID
+          required: true
+          in: path
+          type: string
+      responses:
+        '200':
+          description: Deleted successfully
+          schema:
+           "$ref": "#/definitions/Error"
+        default:
+          description: Unexpected error
+          schema:
+            "$ref": "#/definitions/Error"
+definitions:
+  Loc:
+    type: object
+    properties:
+      id:
+        type: string
+      lat:
+        type: number
+      lng:
+        type: number
+      which:
+        type: string
+        enum:
+          - left
+          - right
+          - both
+        default: left
+      gender:
+        type: string
+        enum:
+          - male
+          - female
+          - unknown
+        default: female
+      title:
+        type: string
+      desc:
+        type: string
+      wecaht:
+        type: string
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
