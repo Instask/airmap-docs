@@ -55,6 +55,80 @@ paths:
       parameters:
         - name: lat
           description: Loc latitude
+          required: false
+          in: formData
+          type: number
+        - name: lng
+          description: Loc longitude
+          required: false
+          in: formData
+          type: number
+        - name: title
+          description: Loc title
+          required: false
+          in: formData
+          type: string
+        - name: desc
+          description: Loc desc
+          required: false
+          in: formData
+          type: string
+        - name: wechat
+          description: Loc wechat
+          required: false
+          in: formData
+          type: string
+        - name: gender
+          description: Reporter gender
+          required: false
+          in: formData
+          type: string
+        - name: which
+          description: Which airpod
+          required: false
+          in: formData
+          type: string
+      responses:
+        '201':
+          description: Loc object
+          schema:
+            "$ref": "#/definitions/Loc"
+        default:
+          description: Unexpected error
+          schema:
+            "$ref": "#/definitions/Error"
+  "/loc/{id}":
+    get:
+      summary: Get a Loc by id
+      tags:
+      - Loc
+      parameters:
+        - name: id
+          description: Loc ID
+          required: true
+          in: path
+          type: string
+      responses:
+        '200':
+          description: Deleted successfully
+          schema:
+           "$ref": "#/definitions/Loc"
+        default:
+          description: Unexpected error
+          schema:
+            "$ref": "#/definitions/Error"
+    put:
+      summary: Update a Loc by id
+      tags:
+      - Loc
+      parameters:
+        - name: id
+          description: Loc ID
+          required: true
+          in: path
+          type: string
+        - name: lat
+          description: Loc latitude
           required: true
           in: formData
           type: number
@@ -89,17 +163,16 @@ paths:
           in: formData
           type: string
       responses:
-        '201':
-          description: Loc object
+        '200':
+          description: Deleted successfully
           schema:
-            "$ref": "#/definitions/Loc"
+           "$ref": "#/definitions/Loc"
         default:
           description: Unexpected error
           schema:
             "$ref": "#/definitions/Error"
-  "/loc/{id}":
     delete:
-      summary: Delete an Loc by id
+      summary: Delete a Loc by id
       tags:
       - Loc
       parameters:
